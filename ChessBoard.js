@@ -8,6 +8,6 @@ for(var i = 1; i <= (size * size); i++){
 			swap = !swap;
 		str += "\n";
 	}
-		swap = !swap;
+	swap = !swap;
 }
 console.log(str);
