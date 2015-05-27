@@ -52,9 +52,25 @@ function average(array) {
   return array.reduce(plus) / array.length;
 }
 
-var age = [];
+function age(person){
+  return person.died - person.born;
+}
 
-ancestry.forEach(function(person,i){
-    age.push([person.born, person.died, person.died - person.born]);
+function groupBy(arr, compute){
+  var groups = {};
+  arr.forEach(function(person){
+    var x = compute(person);
+    if(!groups[x])
+      groups[x] = [];
+    groups[x].push(age(person));
+  });
+  return groups;
+}
+
+var centuries = groupBy(ancestry, function(a){
+  return (Math.ceil(a.died/100));
 });
-console.log(age);
+
+for(group in centuries){
+  console.log(group+" : "+average(centuries[group]));
+}
