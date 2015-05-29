@@ -2,7 +2,7 @@ var fruits = {
 	Apple: ["red","green"],
 	Mango: ["yellow","green"],
 	Grapes: ["black","green"],
-	Orange: ["orange"],
+	Orange: [1],
 };
 
 var nestedObj = {
@@ -11,20 +11,11 @@ var nestedObj = {
 
 var names = ["Ted","Robin","Lily","Marshall","Barney"];
 var games = [
-	["Cricket",["Bat","Ball"]],
+	["Cricket",["Bat","Ball",2]],
 	["Football",["Ball"]],
-	["Hockey",["Stick","Ball"]],
+	["Hockey",[5,"Stick","Ball"]],
 	["Golf",["Club","Ball"]]
 ];
-
-
-// function isArray(obj){
-// 	if(obj.length == undefined) return false;
-// 	for(ele in obj){
-// 		if(ele == "length") return false;
-// 	}
-// 	return true;
-// }
 
 function isArray(obj){
 	return (Object.prototype.toString.call(obj) === "[object Array]");
@@ -32,12 +23,18 @@ function isArray(obj){
 
 function stringify(data){
 	var str = "";
-	var length = undefined;
 	if(data == null) return "null";
 	if(isArray(data)){
 		str+="[";
 		data.forEach(function(d,i){
-			str+='"'+d+'"';
+			if(typeof d == "object")
+				str+=stringify(d);
+			else{
+				if(isNaN(d))
+					str+='"'+d+'"';
+				else
+					str+=d;
+			}
 			if(i != (data.length-1)) str+=",";
 		});
 		str+="]";
@@ -46,11 +43,14 @@ function stringify(data){
 		str+="{";
 		for(ele in data){
 			str+='"'+ele+'":';
-			if(typeof data[ele] == "object"){
+			if(typeof data[ele] == "object")
 				str+=stringify(data[ele]);
+			else{
+				if(isNaN(data[ele]))
+					str+='"'+data[ele]+'"';
+				else
+					str+=data[ele];
 			}
-			else
-				str+=data[ele];
 			str+=",";
 		}
 		str = str.substr(0,(str.length-1));
