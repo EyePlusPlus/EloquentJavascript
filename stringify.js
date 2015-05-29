@@ -1,3 +1,4 @@
+//Some predefined objects to test the function
 var fruits = {
 	Apple: ["red","green"],
 	Mango: ["yellow","green"],
@@ -6,14 +7,14 @@ var fruits = {
 };
 
 var nestedObj = {
-	This: {1: {a: {nested: {object: null}}}}
+	This: {1.2: {a: {nested: {object: null}}}}
 };
 
 var names = ["Ted","Robin","Lily","Marshall","Barney"];
 var games = [
 	["Cricket",["Bat","Ball",2]],
 	["Football",["Ball"]],
-	["Hockey",[5,"Stick","Ball"]],
+	["Hockey",[5.1,"Stick","Ball"]],
 	["Golf",["Club","Ball"]]
 ];
 
@@ -21,20 +22,26 @@ function isArray(obj){
 	return (Object.prototype.toString.call(obj) === "[object Array]");
 }
 
+//Abstracted the code that checks the type of element and accordingly concatenates
+function concatElement(ele){
+	var str = "";
+	if(typeof ele == "object")
+		str+=stringify(ele);
+	else if(isNaN(ele))
+			str+='"'+ele+'"';
+	else
+		str+=ele;
+	return str; 
+}
+
+
 function stringify(data){
 	var str = "";
 	if(data == null) return "null";
 	if(isArray(data)){
 		str+="[";
 		data.forEach(function(d,i){
-			if(typeof d == "object")
-				str+=stringify(d);
-			else{
-				if(isNaN(d))
-					str+='"'+d+'"';
-				else
-					str+=d;
-			}
+			str+=concatElement(d);
 			if(i != (data.length-1)) str+=",";
 		});
 		str+="]";
@@ -43,15 +50,7 @@ function stringify(data){
 		str+="{";
 		for(ele in data){
 			str+='"'+ele+'":';
-			if(typeof data[ele] == "object")
-				str+=stringify(data[ele]);
-			else{
-				if(isNaN(data[ele]))
-					str+='"'+data[ele]+'"';
-				else
-					str+=data[ele];
-			}
-			str+=",";
+			str+=concatElement(data[ele])+",";
 		}
 		str = str.substr(0,(str.length-1));
 		str+="}";
