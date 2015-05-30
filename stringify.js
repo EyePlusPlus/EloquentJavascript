@@ -3,7 +3,7 @@ var fruits = {
 	Apple: ["red","green"],
 	Mango: ["yellow","green"],
 	Grapes: ["black","green"],
-	Orange: [1],
+	Orange: ["1"],
 };
 
 var nestedObj = {
@@ -27,10 +27,10 @@ function concatElement(ele){
 	var str = "";
 	if(typeof ele == "object")
 		str+=stringify(ele);
-	else if(isNaN(ele))
-			str+='"'+ele+'"';
-	else
+	else if(typeof ele == "number")
 		str+=ele;
+	else
+		str+='"'+ele+'"';
 	return str; 
 }
 
