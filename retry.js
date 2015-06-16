@@ -6,22 +6,19 @@ function MultiplicatorUnitFailure(message){
 MultiplicatorUnitFailure.prototype = Object.create(Error.prototype);
 MultiplicatorUnitFailure.prototype.name = "MultiplicatorUnitFailure";
 
-function primitiveMultiply(n){
-	for(var i = 0; i < (n*2); i++){
-		try{
-			if(i%2 == 0)
-				console.log(Math.random()*10)*(Math.random()*10);
-			else
-				throw new MultiplicatorUnitFailure("Invalid Numbers getting multiplied!");
-		}
-		catch(e){
-			if(e instanceof MultiplicatorUnitFailure)
-				console.log(e.message);
-			else
-				console.log(e);
-		}
-	}
+function primitiveMultiply(a,b){
+	if(Math.random() < 0.5)
+		return a*b;
+	else
+		throw new MultiplicatorUnitFailure("Invalid numbers getting multiplied!");
 }
 
-
-primitiveMultiply(2);
+try{
+	console.log(primitiveMultiply(Math.floor(Math.random()*10), Math.floor(Math.random()*10)));
+}
+catch(e){
+	if(e instanceof MultiplicatorUnitFailure)
+		console.log(e.message);
+	else
+		console.log(e);
+}
