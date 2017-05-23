@@ -1,13 +1,15 @@
-var str = '';
 var size = 8;
-var swap = true;
-for(var i = 1; i <= (size * size); i++){
-	str += (swap)? " " : "#";
-	if(i%size == 0){
-		if(size%2 == 0)
-			swap = !swap;
-		str += "\n";
-	}
-	swap = !swap;
+
+var str = "";
+
+for (var y = 0; y < size; y++) {  
+  for (var x = 0; x < size; x++) {
+    if ((x + y) % 2 == 0)
+      str += " ";
+    else
+      str += "#";
+  }
+  str += "\n";
 }
+
 console.log(str);
